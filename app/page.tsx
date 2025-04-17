@@ -12,9 +12,7 @@ declare global {
 
 export default function Home() {
 
-	const [adLocation, setAdLocation] = useState("");
 	const [showModal, setShowModal] = useState(true);
-
 	const playGame = (url: string) => {
 		// console.log(url);
 		window.location.href = "https://kakugames.com/game/" + url;
@@ -26,7 +24,8 @@ export default function Home() {
 
 	useEffect(() => {
 		(window as any).googletag = (window as any).googletag || { cmd: [] };
-		window.googletag.cmd.push(function () {
+		const googletag = (window as any).googletag;
+		googletag.cmd.push(function () {
 			if (Math.random() < 1) {
 				const GEO_TARGETS = [
 					"California, US",
@@ -47,7 +46,7 @@ export default function Home() {
 				];
 				const geoTarget = GEO_TARGETS[Math.floor(Math.random() * GEO_TARGETS.length)];
 				window.geoTarget = geoTarget;
-				window.googletag.pubads().setLocation(geoTarget);
+				googletag.pubads().setLocation(geoTarget);
 			}
 		});
 		setTimeout(() => {
@@ -97,18 +96,20 @@ export default function Home() {
 							</svg>
 						</button>
 						<AdUnit
-							adUnitPath="/23178317433/kaku_reward"
-							sizes={[[300, 300], [300, 250]]}
+							adUnitPath="/23178317433/kaku_display_02"
+							sizes={[[300, 250]]}
 							id="div-gpt-ad-123456789-1"
 						/>
 					</div>
 				</div>
 			}
-			<AdUnit
-				adUnitPath="/23178317433/kaku_reward"
-				sizes={[[300, 300], [300, 250]]}
-				id="div-gpt-ad-123456789-0"
-			/>
+			<div className="text-center">
+				<AdUnit
+					adUnitPath="/23178317433/kaku_display_01"
+					sizes={[[300, 250]]}
+					id="div-gpt-ad-123456789-0"
+				/>
+			</div>
 			<div className="m-5 p-5 border border-gray-200 rounded-xl shadow-lg/10 text-center">
 				<div className="text-sm text-center text-gray-400">Redeem rewards to play free games</div>
 				<button className="bg-blue-500 rounded-xl w-full py-2 text-white font-semibold text-md mt-2 shadow-lg/10 cursor-pointer">Lets Play 🔥</button>

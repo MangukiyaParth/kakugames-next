@@ -19,10 +19,10 @@ export default function AdUnit({ adUnitPath, sizes, id }: { adUnitPath: string, 
 
     return () => {
       if ((window as any).googletag && googletag.destroySlots) {
-        googletag.destroySlots();
+        // googletag.destroySlots();
       }
     };
-  }, [adUnitPath, sizes, id]);
+  }, []);
 
-  return <div id={id} style={{ minWidth: '100%', minHeight: '300px', display: 'flex', justifyContent: 'center' }} />;
+  return <div id={id} style={{ minWidth: '250px', minHeight: '250px', width: 'fit-content', display: 'flex', justifyContent: 'center' }} />;
 }
