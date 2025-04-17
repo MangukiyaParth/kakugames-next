@@ -6,13 +6,14 @@ import React, { useEffect, useState } from 'react';
 declare global {
   interface Window {
 	googletag: any;
+	geoTarget: any;
   }
 }
 
 export default function Home() {
 
+	const [adLocation, setAdLocation] = useState("");
 	const [showModal, setShowModal] = useState(true);
-	const [isAdLoaded, setIsAdLoaded] = useState(false);
 
 	const playGame = (url: string) => {
 		// console.log(url);
@@ -24,54 +25,35 @@ export default function Home() {
 	}
 
 	useEffect(() => {
-		// initializeRewardedAd();
-		showRewardAd();
-	}, []);
-
-	const initializeRewardedAd = () => {
-		window.googletag = window.googletag || { cmd: [] };
-		window.googletag.cmd.push(() => {
-			// Define the rewarded ad slot
-			const rewardedSlot = window.googletag.defineOutOfPageSlot(
-				'/23178317433/kaku_reward',
-				window.googletag.enums.OutOfPageFormat.REWARDED
-			);
-			
-			if (rewardedSlot) {
-				rewardedSlot.addService(window.googletag.pubads());
-				// Event listeners
-				window.googletag.pubads().addEventListener('slotResponseReceived', (event: any) => {
-					if (event.slot === rewardedSlot) {
-						setIsAdLoaded(true);
-					}
-				});
-				
-				window.googletag.pubads().addEventListener('rewardedSlotReady', (event: any) => {
-					// Show the ad when ready
-					window.googletag.pubads().show(rewardedSlot).then(() => {
-						console.log('Rewarded ad shown');
-					});
-				});
-				
-				window.googletag.pubads().addEventListener('rewardedSlotGranted', () => {
-					console.log('User earned reward');
-				});
-				
-				window.googletag.enableServices();
+		(window as any).googletag = (window as any).googletag || { cmd: [] };
+		window.googletag.cmd.push(function () {
+			if (Math.random() < 1) {
+				const GEO_TARGETS = [
+					"California, US",
+					"Texas, US",
+					"Florida, US",
+					"New York, US",
+					"Pennsylvania, US",
+					"Illinois, US",
+					"Ohio, US",
+					"Georgia, US",
+					"North Carolina, US",
+					"Michigan, US",
+					"Melbourne, AU",
+					"Victoria, AU",
+					"Toronto, CA",
+					"Ottawa, CA",
+					"Wellington, NZ",
+				];
+				const geoTarget = GEO_TARGETS[Math.floor(Math.random() * GEO_TARGETS.length)];
+				window.geoTarget = geoTarget;
+				window.googletag.pubads().setLocation(geoTarget);
 			}
 		});
-	};
-	
-	const showRewardedAd = () => {
-		if (!isAdLoaded) {
-			console.log('Ad not loaded yet');
-			return;
-		}
-		
-		window.googletag.cmd.push(() => {
-		  	window.googletag.pubads().refresh();
-		});
-	};
+		setTimeout(() => {
+			showRewardAd();
+		}, 2000);
+	}, []);
 
 	const showRewardAd = () => {
 		if (!window.googletag || !window.googletag.cmd) {
@@ -105,13 +87,6 @@ export default function Home() {
 	}
 	return (
 		<div className="w-full md:w-[400px] bg-white h-full border-x-1 border-gray-200">
-			<button 
-				onClick={showRewardedAd} 
-				disabled={!isAdLoaded}
-				className="rewarded-ad-button hidden"
-			>
-				{isAdLoaded ? 'Watch Ad for Reward' : 'Loading Ad...'}
-			</button>
 			{ showModal &&
 				<div className="fixed modal z-50 inset-0 flex items-center justify-center w-[100%]">
 					<div className="fixed inset-0 bg-gray-800 opacity-[0.6]"></div>
@@ -123,7 +98,7 @@ export default function Home() {
 						</button>
 						<AdUnit
 							adUnitPath="/23178317433/kaku_reward"
-							sizes={[[728, 90], [970, 90]]}
+							sizes={[[300, 300], [300, 250]]}
 							id="div-gpt-ad-123456789-1"
 						/>
 					</div>
@@ -131,7 +106,7 @@ export default function Home() {
 			}
 			<AdUnit
 				adUnitPath="/23178317433/kaku_reward"
-				sizes={[[728, 90], [970, 90]]}
+				sizes={[[300, 300], [300, 250]]}
 				id="div-gpt-ad-123456789-0"
 			/>
 			<div className="m-5 p-5 border border-gray-200 rounded-xl shadow-lg/10 text-center">
