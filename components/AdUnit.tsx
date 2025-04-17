@@ -13,6 +13,7 @@ export default function AdUnit({ adUnitPath, sizes, id }: { adUnitPath: string, 
       if ((window as any).geoTarget) {
         googletag.pubads().setLocation((window as any).geoTarget);
       }
+      googletag.display(id);
     });
 
     // Load GPT script

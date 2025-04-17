@@ -103,7 +103,7 @@ export default function Home() {
 					</div>
 				</div>
 			}
-			<div className="text-center">
+			<div className="flex justify-center items-center">
 				<AdUnit
 					adUnitPath="/23178317433/kaku_display_01"
 					sizes={[[300, 250]]}
