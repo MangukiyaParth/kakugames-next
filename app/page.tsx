@@ -49,6 +49,28 @@ export default function Home() {
 				googletag.pubads().setLocation(geoTarget);
 			}
 		});
+		googletag.cmd.push(function() {
+			googletag.defineSlot("/23178317433/kaku_display_02", [[300, 250]], "div-gpt-ad-123456789-2")
+				.addService(googletag.pubads());
+			
+			googletag.pubads().enableSingleRequest();
+			googletag.enableServices();
+			if ((window as any).geoTarget) {
+				googletag.pubads().setLocation((window as any).geoTarget);
+			}
+			googletag.display("div-gpt-ad-123456789-2");
+		});
+		googletag.cmd.push(function() {
+			googletag.defineSlot("/23178317433/kaku_display_01", [[300, 250]], "div-gpt-ad-123456789-1")
+				.addService(googletag.pubads());
+			
+			googletag.pubads().enableSingleRequest();
+			googletag.enableServices();
+			if ((window as any).geoTarget) {
+				googletag.pubads().setLocation((window as any).geoTarget);
+			}
+			googletag.display("div-gpt-ad-123456789-1");
+		});
 		setTimeout(() => {
 			showRewardAd();
 		}, 2000);
@@ -95,20 +117,12 @@ export default function Home() {
 								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
 							</svg>
 						</button>
-						<AdUnit
-							adUnitPath="/23178317433/kaku_display_02"
-							sizes={[[300, 250]]}
-							id="div-gpt-ad-123456789-1"
-						/>
+						<div id="div-gpt-ad-123456789-2" style={{ minWidth: '250px', minHeight: '250px', width: 'fit-content', display: 'flex', justifyContent: 'center' }} />
 					</div>
 				</div>
 			}
 			<div className="flex justify-center items-center">
-				<AdUnit
-					adUnitPath="/23178317433/kaku_display_01"
-					sizes={[[300, 250]]}
-					id="div-gpt-ad-123456789-0"
-				/>
+				<div id="div-gpt-ad-123456789-1" style={{ minWidth: '250px', minHeight: '250px', width: 'fit-content', display: 'flex', justifyContent: 'center' }} />
 			</div>
 			<div className="m-5 p-5 border border-gray-200 rounded-xl shadow-lg/10 text-center">
 				<div className="text-sm text-center text-gray-400">Redeem rewards to play free games</div>
